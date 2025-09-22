@@ -44,7 +44,7 @@ public class DemoActivity extends AppCompatActivity {
         //开启滑动关闭
         SlideBack.create()
                 .slideView(new DefaultSlideView(this))
-                .attachToActivity(this);
+                .attachToWindow(getWindow());
 
     }
 

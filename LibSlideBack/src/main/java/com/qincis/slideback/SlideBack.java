@@ -16,8 +16,8 @@
 
 package com.qincis.slideback;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.Window;
 
 /**
  * 模仿小米 右滑动返回控制
@@ -66,16 +66,16 @@ public class SlideBack {
     }
 
 
-    public SlideControlLayout attachToActivity(@NonNull Activity activity) {
+    public SlideControlLayout attachToWindow(@NonNull Window window) {
         if (slideView == null) {
-            slideView = new DefaultSlideView(activity);
+            slideView = new DefaultSlideView(window.getContext());
         }
 
         if (canSlideWidth == 0) {
-            canSlideWidth = Utils.d2p(activity, 18);
+            canSlideWidth = Utils.d2p(window.getContext(), 18);
         }
 
-        return new SlideControlLayout(activity, canSlideWidth, slideView, onSlide)
-                .attachToActivity(activity);
+        return new SlideControlLayout(window.getContext(), canSlideWidth, slideView, onSlide)
+                .attachToWindow(window);
     }
 }

@@ -17,15 +17,15 @@
 package com.qincis.slideback;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -53,12 +53,12 @@ public class SlideControlLayout extends FrameLayout {
     }
 
 
-    SlideControlLayout attachToActivity(@NonNull Activity activity) {
+    SlideControlLayout attachToWindow(@NonNull Window window) {
         ViewParent parent = getParent();
         if (parent instanceof ViewGroup) {
             ((ViewGroup) parent).removeView(this);
         }
-        ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
+        ViewGroup decor = (ViewGroup) window.getDecorView();
 
         decor.addView(this, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return this;
