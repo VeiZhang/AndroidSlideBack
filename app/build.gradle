@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdk 33
+    namespace "com.qincis.slideback.demo"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
     }
@@ -24,9 +24,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     def libs = rootProject.ext.libs
-    compile libs['appcompat-v7']
+    implementation libs['appcompat-v7']
 //    compile 'com.qincis.slideback:LibSlideBack:0.0.1'
-    compile project(':LibSlideBack')
+    implementation project(':LibSlideBack')
 }
