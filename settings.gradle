@@ -1,1 +1,18 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+		maven { url 'https://dl.bintray.com/qinci/maven' }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+		maven { url 'https://dl.bintray.com/qinci/maven' }
+    }
+}
+rootProject.name = "AndroidSlideBack"
 include ':app', ':LibSlideBack'
