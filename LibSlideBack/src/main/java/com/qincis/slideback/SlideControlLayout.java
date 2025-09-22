@@ -139,9 +139,9 @@ public class SlideControlLayout extends FrameLayout {
 
             case MotionEvent.ACTION_MOVE:
                 if (startDrag) {
-                    moveX = currentX - downX;
-                    if (Math.abs(moveX) <= slideBackView.getWidth() * 2) {
-                        slideBackView.updateRate(Math.abs(moveX) / 2, false);
+                    moveX = Math.abs(currentX - downX);
+                    if (moveX <= slideBackView.getWidth() * 2) {
+                        slideBackView.updateRate(moveX / 2, false);
                     } else {
                         slideBackView.updateRate(slideBackView.getWidth(), false);
                     }
