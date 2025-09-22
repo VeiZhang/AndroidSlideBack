@@ -43,11 +43,11 @@ class SlideBackView extends View {
 
     public SlideBackView setSlideView(@NonNull ISlideView slideView) {
         this.slideView = slideView;
-        setLayoutParams(true);
+        setIsLeftPanel(true);
         return this;
     }
 
-    public void setLayoutParams(boolean isLeftPanel) {
+    public void setIsLeftPanel(boolean isLeftPanel) {
         slideView.setIsLeftPanel(isLeftPanel);
         SlideControlLayout.LayoutParams params = new SlideControlLayout.LayoutParams(slideView.getWidth(), slideView.getHeight());
         if (isLeftPanel) {

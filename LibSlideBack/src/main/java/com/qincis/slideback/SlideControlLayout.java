@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -118,7 +117,7 @@ public class SlideControlLayout extends FrameLayout {
                 if (currentY > Utils.d2p(getContext(), 100)) {
 
                     if (currentX <= canSlideWidth) {
-                        slideBackView.setLayoutParams(true);
+                        slideBackView.setIsLeftPanel(true);
 
                         downX = currentX;
                         startDrag = true;
@@ -126,7 +125,7 @@ public class SlideControlLayout extends FrameLayout {
                         setSlideViewY(slideBackView, (int) (motionEvent.getRawY()));
 
                     } else if (currentX >= displayWidth - canSlideWidth) {
-                        slideBackView.setLayoutParams(false);
+                        slideBackView.setIsLeftPanel(false);
 
                         downX = currentX;
                         startDrag = true;
