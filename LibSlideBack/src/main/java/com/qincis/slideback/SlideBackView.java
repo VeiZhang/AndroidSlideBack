@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -42,8 +43,19 @@ class SlideBackView extends View {
 
     public SlideBackView setSlideView(@NonNull ISlideView slideView) {
         this.slideView = slideView;
-        setLayoutParams(new SlideControlLayout.LayoutParams(slideView.getWidth(), slideView.getHeight()));
+        setLayoutParams(true);
         return this;
+    }
+
+    public void setLayoutParams(boolean isLeftPanel) {
+        slideView.setIsLeftPanel(isLeftPanel);
+        SlideControlLayout.LayoutParams params = new SlideControlLayout.LayoutParams(slideView.getWidth(), slideView.getHeight());
+        if (isLeftPanel) {
+            params.gravity = Gravity.LEFT | Gravity.START;
+        } else {
+            params.gravity = Gravity.RIGHT | Gravity.END;
+        }
+        setLayoutParams(params);
     }
 
     public ISlideView getSlideView() {

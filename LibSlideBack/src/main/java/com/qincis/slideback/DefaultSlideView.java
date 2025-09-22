@@ -40,6 +40,8 @@ public class DefaultSlideView implements ISlideView {
     private final int width;
     private final int height;
 
+    private boolean mIsLeftPanel = true;
+
 
     public DefaultSlideView(@NonNull Context context) {
         width = Utils.d2p(context, 50);
@@ -91,11 +93,9 @@ public class DefaultSlideView implements ISlideView {
 
     @Override
     public void onDraw(Canvas canvas, float currentWidth) {
-        float height = getHeight();
-        int maxWidth = getWidth();
-        float centerY = height / 2;
+        int width = getWidth();
 
-        float progress = currentWidth / maxWidth;
+        float progress = currentWidth / width;
         if (progress == 0) {
             return;
         }
@@ -104,6 +104,20 @@ public class DefaultSlideView implements ISlideView {
         paint.setAlpha((int) (200 * progress));
 
         //画半弧背景
+
+        if (mIsLeftPanel) {
+            drawLeft(canvas, currentWidth, progress);
+        } else {
+            drawRight(canvas, currentWidth, progress);
+        }
+
+
+    }
+
+    private void drawLeft(Canvas canvas, float currentWidth, float progress) {
+        float height = getHeight();
+        float centerY = height / 2;
+
         /*
 
         ps: 小点为起始点和结束点，星号为控制点
@@ -147,7 +161,43 @@ public class DefaultSlideView implements ISlideView {
             canvas.drawLine(arrowEnd, centerY - arrowWidth, arrowLeft, centerY, arrowPaint);
             canvas.drawLine(arrowLeft, centerY, arrowEnd, centerY + arrowWidth, arrowPaint);
         }
+    }
 
+    private void drawRight(Canvas canvas, float currentWidth, float progress) {
+        float height = getHeight();
+        float centerY = height / 2;
 
+        int width = getWidth();
+
+        float bezierWidth = currentWidth / 2;
+        bezierPath.reset();
+        bezierPath.moveTo(width, 0);
+        bezierPath.cubicTo(width, height / 4f, width - bezierWidth, height * 3f / 8, width - bezierWidth, centerY);
+        bezierPath.cubicTo(width - bezierWidth, height * 5f / 8, width, height * 3f / 4, width, height);
+        canvas.drawPath(bezierPath, paint);
+
+        arrowPaint.setColor(arrowColor);
+        arrowPaint.setAlpha((int) (255 * progress));
+
+        //画箭头
+        float arrowRight = width - currentWidth / 6;
+        if (progress <= 0.2) {
+            // ignore
+        } else if (progress <= 0.7f) {
+            // 起初变长竖直过程（竖线）
+            float newProgress = (progress - 0.2f) / 0.5f;
+            canvas.drawLine(arrowRight, centerY - arrowWidth * newProgress, arrowRight, centerY + arrowWidth * newProgress, arrowPaint);
+        } else {
+            // 后面变形到完整箭头过程
+            float arrowEnd = arrowRight - (arrowWidth * (progress - 0.7f) / 0.3f); // 注意减号
+            canvas.drawLine(arrowRight, centerY - arrowWidth, arrowEnd, centerY, arrowPaint);
+            canvas.drawLine(arrowEnd, centerY, arrowRight, centerY + arrowWidth, arrowPaint);
+        }
+
+    }
+
+    @Override
+    public void setIsLeftPanel(boolean isLeftPanel) {
+        mIsLeftPanel = isLeftPanel;
     }
 }

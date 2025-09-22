@@ -19,10 +19,14 @@ package com.qincis.slideback;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
@@ -103,12 +107,33 @@ public class SlideControlLayout extends FrameLayout {
 
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                Point size = new Point();
+                display.getRealSize(size);
+                int displayWidth = size.x;
+
+
                 float currentY = motionEvent.getRawY();
-                if (currentY > Utils.d2p(getContext(), 100) && currentX <= canSlideWidth) {
-                    downX = currentX;
-                    startDrag = true;
-                    slideBackView.updateRate(0, false);
-                    setSlideViewY(slideBackView, (int) (motionEvent.getRawY()));
+                if (currentY > Utils.d2p(getContext(), 100)) {
+
+                    if (currentX <= canSlideWidth) {
+                        slideBackView.setLayoutParams(true);
+
+                        downX = currentX;
+                        startDrag = true;
+                        slideBackView.updateRate(0, false);
+                        setSlideViewY(slideBackView, (int) (motionEvent.getRawY()));
+
+                    } else if (currentX >= displayWidth - canSlideWidth) {
+                        slideBackView.setLayoutParams(false);
+
+                        downX = currentX;
+                        startDrag = true;
+                        slideBackView.updateRate(0, false);
+                        setSlideViewY(slideBackView, (int) (motionEvent.getRawY()));
+                    }
+
                 }
                 break;
 

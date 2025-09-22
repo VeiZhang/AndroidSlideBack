@@ -48,4 +48,11 @@ public interface ISlideView {
          * @param currentWidth 根据手指滑动得出的当前宽度（最大值为getWidth())
          */
         void onDraw(Canvas canvas, float currentWidth);
+
+        /**
+         * true左侧滑动，false右侧滑动
+         *
+         * @param isLeftPanel
+         */
+        void setIsLeftPanel(boolean isLeftPanel);
     }
